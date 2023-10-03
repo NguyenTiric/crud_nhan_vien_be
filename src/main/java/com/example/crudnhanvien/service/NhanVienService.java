@@ -3,7 +3,9 @@ package com.example.crudnhanvien.service;
 import com.example.crudnhanvien.model.request.create_request.CreateNhanVienRequest;
 import com.example.crudnhanvien.model.request.update_request.UpdateNhanVienRequest;
 import com.example.crudnhanvien.model.response.NhanVienResponse;
+import com.example.crudnhanvien.trang_thai_enum.TrangThai;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,7 +13,8 @@ public interface NhanVienService {
 
     Page<NhanVienResponse> pageNhanVien(Integer pageNo,Integer size);
 
-    Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo,Integer size,String search);
+    Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search, TrangThai.TrangThaiNhanVien trangThai);
+    Page<NhanVienResponse> pageSearchNhanVienName(Integer pageNo, Integer size, String ten,String email,String sdt);
 
     NhanVienResponse create(CreateNhanVienRequest createNhanVienRequest);
 

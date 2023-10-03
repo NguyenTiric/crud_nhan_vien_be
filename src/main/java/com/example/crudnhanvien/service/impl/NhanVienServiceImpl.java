@@ -12,6 +12,7 @@ import com.example.crudnhanvien.model.response.NhanVienResponse;
 import com.example.crudnhanvien.repository.ChucVuRepository;
 import com.example.crudnhanvien.repository.NhanVienRepository;
 import com.example.crudnhanvien.service.NhanVienService;
+import com.example.crudnhanvien.trang_thai_enum.TrangThai;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,6 +27,7 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Autowired
     NhanVienRepository nhanVienRepository;
+
     @Autowired
     ChucVuRepository chucVuRepository;
 
@@ -40,9 +42,16 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search) {
+    public Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search, TrangThai.TrangThaiNhanVien trangThai) {
         Pageable pageable = PageRequest.of(pageNo, size,Sort.by(Sort.Direction.DESC, "id"));
-        Page<NhanVien> nhanVienPage = nhanVienRepository.pageSearch(pageable, search);
+        Page<NhanVien> nhanVienPage = nhanVienRepository.pageSearch(pageable, search,trangThai);
+        return nhanVienPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
+    }
+
+    @Override
+    public Page<NhanVienResponse> pageSearchNhanVienName(Integer pageNo, Integer size, String ten, String email, String sdt) {
+        Pageable pageable = PageRequest.of(pageNo, size,Sort.by(Sort.Direction.DESC, "id"));
+        Page<NhanVien> nhanVienPage = nhanVienRepository.pageSearchName(pageable, ten,email,sdt);
         return nhanVienPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
     }
 
@@ -50,6 +59,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public NhanVienResponse create(CreateNhanVienRequest createNhanVienRequest) {
         try {
             NhanVien nhanVien = nhanVienMapper.createNhanVienRequestToNhanVienEntity(createNhanVienRequest);
+            nhanVien.setTrangThai(TrangThai.TrangThaiNhanVien.ACTIVE);
             return nhanVienMapper.nhanVienEntityToNhanVienResponse(nhanVienRepository.save(nhanVien));
         } catch (DataIntegrityViolationException ex) {
             throw new DuplicateRecordException("Failed to create product. Possibly duplicate record." + ex);

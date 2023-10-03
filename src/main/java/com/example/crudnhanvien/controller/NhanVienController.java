@@ -3,6 +3,7 @@ package com.example.crudnhanvien.controller;
 import com.example.crudnhanvien.model.request.create_request.CreateNhanVienRequest;
 import com.example.crudnhanvien.model.request.update_request.UpdateNhanVienRequest;
 import com.example.crudnhanvien.service.NhanVienService;
+import com.example.crudnhanvien.trang_thai_enum.TrangThai;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,22 @@ public class NhanVienController {
 
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam(name = "search",required = false) String search,
+                                    @RequestParam(name = "trangThai",required = false) String trangThai,
                                     @RequestParam(defaultValue = "0", name = "pageNo", required = false) Integer pageNo,
                                     @RequestParam(defaultValue = "5", name = "pageSize", required = false) Integer pageSize) {
-        return ResponseEntity.ok(nhanVienService.pageSearchNhanVien(pageNo, pageSize, search));
+        return ResponseEntity.ok(nhanVienService.pageSearchNhanVien(pageNo, pageSize, search, TrangThai.TrangThaiNhanVien.valueOf(trangThai)));
     }
+
+
+    @GetMapping("/searchName")
+    public ResponseEntity<?> searchName( @RequestParam(name = "ten",required = false) String ten,
+                                         @RequestParam(name = "email",required = false) String email,
+                                    @RequestParam(name = "sdt",required = false) String sdt,
+                                    @RequestParam(defaultValue = "0", name = "pageNo", required = false) Integer pageNo,
+                                    @RequestParam(defaultValue = "5", name = "pageSize", required = false) Integer pageSize) {
+        return ResponseEntity.ok(nhanVienService.pageSearchNhanVienName(pageNo, pageSize, ten, email,sdt));
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getNhanVienId(@PathVariable("id") Integer id) {
