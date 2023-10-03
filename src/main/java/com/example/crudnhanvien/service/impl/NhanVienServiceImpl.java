@@ -42,9 +42,14 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     @Override
-    public Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search, TrangThai.TrangThaiNhanVien trangThai) {
+    public Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search, String trangThai) {
         Pageable pageable = PageRequest.of(pageNo, size,Sort.by(Sort.Direction.DESC, "id"));
-        Page<NhanVien> nhanVienPage = nhanVienRepository.pageSearch(pageable, search,trangThai);
+        TrangThai.TrangThaiNhanVien trangThaiNhanVien = null;
+
+        if (trangThai != null) {
+            trangThaiNhanVien = TrangThai.TrangThaiNhanVien.valueOf(trangThai);
+        }
+        Page<NhanVien> nhanVienPage = nhanVienRepository.pageSearch(pageable, search,trangThaiNhanVien);
         return nhanVienPage.map(nhanVienMapper::nhanVienEntityToNhanVienResponse);
     }
 

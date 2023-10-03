@@ -14,8 +14,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVien,Integer> {
-    @Query(value = "SELECT nv FROM NhanVien nv LEFT JOIN nv.chucVu cv WHERE nv.ten LIKE %:search% or nv.email like %:search% or nv.sdt like %:search% and nv.trangThai = :trangThai")
-   Page<NhanVien> pageSearch(Pageable pageable, @Param("search") String search, @Param("trangThai") TrangThai.TrangThaiNhanVien trangThai);
+    @Query("SELECT nv FROM NhanVien nv LEFT JOIN nv.chucVu cv WHERE " +
+            "(:search is null or nv.ten LIKE %:search% or nv.email like %:search% or nv.sdt like %:search%) " +
+            "and (:trangThai is null or nv.trangThai = :trangThai)")
+    Page<NhanVien> pageSearch(Pageable pageable, @Param("search") String search, @Param("trangThai") TrangThai.TrangThaiNhanVien trangThai);
+
     @Query(value = "SELECT nv FROM NhanVien nv LEFT JOIN nv.chucVu cv WHERE (:ten IS NULL OR nv.ten = :ten) AND (:email IS NULL OR nv.email = :email) AND (:sdt IS NULL OR nv.sdt = :sdt)")
     Page<NhanVien> pageSearchName(Pageable pageable, @Param("ten") String ten, @Param("email") String email, @Param("sdt") String sdt);
 //    @Query(value = "select nv.* from nhan_vien nv left join chuc_vu cv on nv.chuc_vu_id = cv.id " +

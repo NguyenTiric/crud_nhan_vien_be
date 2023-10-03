@@ -43,9 +43,8 @@ public class NhanVienController {
                                     @RequestParam(name = "trangThai",required = false) String trangThai,
                                     @RequestParam(defaultValue = "0", name = "pageNo", required = false) Integer pageNo,
                                     @RequestParam(defaultValue = "5", name = "pageSize", required = false) Integer pageSize) {
-        return ResponseEntity.ok(nhanVienService.pageSearchNhanVien(pageNo, pageSize, search, TrangThai.TrangThaiNhanVien.valueOf(trangThai)));
+        return ResponseEntity.ok(nhanVienService.pageSearchNhanVien(pageNo, pageSize, search, trangThai));
     }
-
 
     @GetMapping("/searchName")
     public ResponseEntity<?> searchName( @RequestParam(name = "ten",required = false) String ten,

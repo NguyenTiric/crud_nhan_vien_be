@@ -8,13 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface NhanVienService {
 
     Page<NhanVienResponse> pageNhanVien(Integer pageNo,Integer size);
 
-    Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search, TrangThai.TrangThaiNhanVien trangThai);
-    Page<NhanVienResponse> pageSearchNhanVienName(Integer pageNo, Integer size, String ten,String email,String sdt);
+    Page<NhanVienResponse> pageSearchNhanVien(Integer pageNo, Integer size, String search, String trangThai);
+
+    Page<NhanVienResponse> pageSearchNhanVienName(Integer pageNo, Integer size, String ten, String email, String sdt);
 
     NhanVienResponse create(CreateNhanVienRequest createNhanVienRequest);
 
