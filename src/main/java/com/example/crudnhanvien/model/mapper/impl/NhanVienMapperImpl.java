@@ -39,6 +39,7 @@ public class NhanVienMapperImpl implements NhanVienMapper {
     public NhanVien createNhanVienRequestToNhanVienEntity(CreateNhanVienRequest createNhanVienRequest) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         NhanVien nhanVien = modelMapper.map(createNhanVienRequest, NhanVien.class);
+        nhanVien.setChucVu(createNhanVienRequest.getChucVu());
         return nhanVien;
     }
 

@@ -4,6 +4,7 @@ import com.example.crudnhanvien.entity.ChucVu;
 import com.example.crudnhanvien.trang_thai_enum.TrangThai;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 @ToString
 public class CreateNhanVienRequest {
     private Integer id;
+    @NotBlank(message = "ma khong duoc trong")
     private String ma;
     private String ten;
     private Boolean gioiTinh;
