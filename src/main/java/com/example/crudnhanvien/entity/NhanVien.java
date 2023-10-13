@@ -37,6 +37,8 @@ public class NhanVien {
     private String ma;
     @Column(name = "ten")
     private String ten;
+    @Column(name = "anh")
+    private String anh;
     @Column(name = "gioi_tinh")
     private Boolean gioiTinh;
     @Column(name = "ngay_sinh")

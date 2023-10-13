@@ -24,6 +24,7 @@ public class CreateNhanVienRequest {
     @NotBlank(message = "ma khong duoc trong")
     private String ma;
     private String ten;
+    private String anh;
     private Boolean gioiTinh;
     private LocalDate ngaySinh;
     private String email;

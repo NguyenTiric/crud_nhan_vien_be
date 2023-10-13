@@ -23,6 +23,7 @@ public class NhanVienResponse {
     private Integer id;
     private String ma;
     private String ten;
+    private String anh;
     private Boolean gioiTinh;
     private LocalDate ngaySinh;
     private String email;
